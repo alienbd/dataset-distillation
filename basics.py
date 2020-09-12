@@ -60,6 +60,7 @@ def train_steps_inplace(state, models, steps, params=None, callback=None):
     if params is None:
         params = [m.get_param() for m in models]
 
+    # print("steps : {}".format(steps))
     for i, (data, label, lr) in enumerate(steps):
         if callback is not None:
             callback(i, params)
