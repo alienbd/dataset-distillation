@@ -43,8 +43,9 @@ class Trainer(object):
         # data
         self.data = []
         for _ in range(self.num_data_steps):
-            distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
-                                       device=state.device, requires_grad=True)
+            # distill_data = torch.randn(self.num_per_step, state.nc, state.input_size, state.input_size,
+            #                            device=state.device, requires_grad=True)
+            distill_data = torch.randn(self.num_per_step, state.input_size, device=state.device, requires_grad=True)
             self.data.append(distill_data)
             self.params.append(distill_data)
 
@@ -70,6 +71,7 @@ class Trainer(object):
             p.grad = torch.zeros_like(p)
 
     def get_steps(self):
+        # print("data: {}".format(self.data))
         data_label_iterable = (x for _ in range(self.state.distill_epochs) for x in zip(self.data, self.labels))
         lrs = F.softplus(self.raw_distill_lrs).unbind()
 
@@ -77,6 +79,7 @@ class Trainer(object):
         for (data, label), lr in zip(data_label_iterable, lrs):
             steps.append((data, label, lr))
 
+        # print("data: {}".format(steps))
         return steps
 
     def forward(self, model, rdata, rlabel, steps):
@@ -177,7 +180,7 @@ class Trainer(object):
         if len(bwd_out) > 0:
             torch.autograd.backward(bwd_out, bwd_grad)
 
-    def save_results(self, steps=None, visualize=True, subfolder=''):
+    def save_results(self, steps=None, visualize=False, subfolder=''):
         with torch.no_grad():
             steps = steps or self.get_steps()
             save_results(self.state, steps, visualize=visualize, subfolder=subfolder)
