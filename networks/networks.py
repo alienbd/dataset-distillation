@@ -1,5 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
+from torch import nn, optim
+import torch
 
 from . import utils
 
@@ -27,6 +29,29 @@ class LeNet(utils.ReparamModule):
         out = F.relu(self.fc2(out), inplace=True)
         out = self.fc3(out)
         return out
+
+
+class SimpleNN(utils.ReparamModule):
+    supported_dims = {25, }
+
+    def __init__(self, state):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(state.input_size, 1024)
+        self.fc2 = nn.Linear(1024, 512)
+        self.fc3 = nn.Linear(512, 256)
+        self.fc4 = nn.Linear(256, 128)
+        self.fc5 = nn.Linear(128, 64)
+        self.fc6 = nn.Linear(64, 32)
+        self.fc7 = nn.Linear(32, 1)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        x = F.relu(self.fc4(x))
+        x = F.relu(self.fc5(x))
+        x = F.relu(self.fc6(x))
+        return torch.sigmoid(self.fc7(x))
 
 
 class AlexCifarNet(utils.ReparamModule):
