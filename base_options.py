@@ -42,7 +42,7 @@ class State(object):
             self.opt = argparse.Namespace(**opt)
         self.extras = {}
         self.__inited = True
-        self._output_flag = True
+        self._output_flag = False
 
     def __setattr__(self, k, v):
         if not self.__inited:
