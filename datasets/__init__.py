@@ -8,6 +8,7 @@ from torchvision import datasets, transforms
 from . import caltech_ucsd_birds
 from . import pascal_voc
 from .usps import USPS
+from . import adult
 
 default_dataset_roots = dict(
     MNIST='./data/mnist',
@@ -17,6 +18,7 @@ default_dataset_roots = dict(
     Cifar10='./data/cifar10',
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
+    ADULT='./data/adult'
 )
 
 
@@ -30,6 +32,7 @@ dataset_normalization = dict(
     CUB200=((0.47850531339645386, 0.4992702007293701, 0.4022205173969269),
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+    ADULT=((1,), (1,))
 )
 
 
@@ -42,6 +45,7 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
+    ADULT=['0', '1']
 )
 
 # (nc, real_size, num_classes)
@@ -55,6 +59,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
+    ADULT=DatasetStats(1, 25, 2),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -96,6 +101,16 @@ def get_dataset(state, phase):
         with suppress_stdout():
             return datasets.MNIST(root, train=(phase == 'train'), download=True,
                                   transform=transforms.Compose(transform_list))
+    if name == 'ADULT':
+        if input_size != real_size:
+            print("size doesn't match")
+        else:
+            transform_list = []
+        transform_list += [
+            transforms.ToTensor(),
+        ]
+        with suppress_stdout():
+            return adult.DatasetAdult('datasets/clean_adult.csv', train=(phase == 'train'))
     elif name == 'MNIST_RGB':
         transform_list = [transforms.Grayscale(3)]
         if input_size != real_size:
