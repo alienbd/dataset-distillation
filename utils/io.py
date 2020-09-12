@@ -100,7 +100,8 @@ def to_np(steps):
         return steps
     np_steps = []
     for data, label, lr in steps:
-        np_data = data.detach().permute(0, 2, 3, 1).to('cpu').numpy()
+        # np_data = data.detach().permute(0, 2, 3, 1).to('cpu').numpy()
+        np_data = data.detach().permute(0, 1).to('cpu').numpy()
         np_label = label.detach().to('cpu').numpy()
         if lr is not None:
             lr = lr.detach().cpu().numpy()
@@ -120,7 +121,7 @@ def to_torch(np_steps, device):
     return steps
 
 
-def save_results(state, steps, visualize=True, subfolder=''):
+def save_results(state, steps, visualize=False, subfolder=''):
     if not state.get_output_flag():
         logging.warning('Skip saving results because output_flag is False')
         return
