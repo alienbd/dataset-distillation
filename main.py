@@ -54,6 +54,8 @@ def main(state):
             logging.info('Save checkpoints [{} ... {}) to {}'.format(
                 start_idx, end_idx, model_dir))
         queue_size = 10  # heuristics
+
+        # print("model_dir={}\nstart_idx={},end_idx={},wrnak={},local_NN={}".format(model_dir, start_idx, end_idx, state.world_rank, state.local_n_nets))
         while cur_idx < end_idx:
             next_cur_idx = min(end_idx, cur_idx + queue_size)
             models = networks.get_networks(state, N=(next_cur_idx - cur_idx))
