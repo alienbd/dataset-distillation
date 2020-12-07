@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader, Dataset
 
 class DatasetAdult_V2(Dataset):
     
-    def __init__(self, file_path,val_split=0.2,train=True, seed=42,target=2):
+    def __init__(self, file_path,val_split=0.2,train=True, seed=42,target=0):
         self.path = file_path
         self.fulldata = pd.read_csv(self.path)
         featureSet = ['age', 'education.num', 'hours.per.week', 'income', 'capital.total', 'Married',
@@ -16,7 +16,7 @@ class DatasetAdult_V2(Dataset):
                       'Own-child', 'Unmarried', 'Wife', 'Blue_colloar', 'Military',
                       'Services', 'White_colloar']
 
-        targetList = ['workclass_label', 'race_label', 'sex_label']
+        targetList = ['sex_label','race_label','workclass_label']
 
         trainset = self.fulldata.sample(frac=1 - val_split, random_state=seed)  # random state is a seed value
         testset = self.fulldata.drop(trainset.index)

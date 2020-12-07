@@ -20,7 +20,9 @@ default_dataset_roots = dict(
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
     ADULT='./data/adult',
-    ADULT_V2 = './data/newAdult'
+    ADULT_sex='./data/adult_multiclass',
+    ADULT_race='./data/adult_multiclass',
+    ADULT_workclass='./data/adult_multiclass',
 )
 
 
@@ -35,7 +37,9 @@ dataset_normalization = dict(
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
     ADULT=((1,), (1,)),
-    ADULT_V2=((1,), (1,))
+    ADULT_sex=((1,), (1,)),
+    ADULT_race=((1,), (1,)),
+    ADULT_workclass=((1,), (1,)),
 )
 
 
@@ -49,7 +53,9 @@ dataset_labels = dict(
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
     ADULT=['0', '1'],
-    ADULT_V2 = ['0','1']
+    ADULT_sex=['0', '1'],
+    ADULT_race=['0', '1', '2'],
+    ADULT_workclass=['0', '1', '2', '3'],
 )
 
 # (nc, real_size, num_classes)
@@ -64,7 +70,9 @@ dataset_stats = dict(
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
     ADULT=DatasetStats(1, 25, 2),
-    ADULT_V2=DatasetStats(1, 18, 2),
+    ADULT_sex=DatasetStats(1, 18, 2),
+    ADULT_race=DatasetStats(1, 18, 2),
+    ADULT_workclass=DatasetStats(1, 18, 2),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -117,7 +125,7 @@ def get_dataset(state, phase):
         with suppress_stdout():
             return adult.DatasetAdult('datasets/clean_adult.csv', train=(phase == 'train'))
 
-    elif name == 'ADULT_V2':
+    elif name == 'ADULT_sex':
         if input_size != real_size:
             print("size doesn't match")
         else:
@@ -126,7 +134,29 @@ def get_dataset(state, phase):
             transforms.ToTensor(),
         ]
         with suppress_stdout():
-            return multiclass_adult.DatasetAdult_V2('datasets/adult_multiclass.csv', train=(phase == 'train'))
+            return multiclass_adult.DatasetAdult_V2('datasets/adult_multiclass.csv', train=(phase == 'train'),target=0)
+
+    elif name == 'ADULT_race':
+        if input_size != real_size:
+            print("size doesn't match")
+        else:
+            transform_list = []
+        transform_list += [
+            transforms.ToTensor(),
+        ]
+        with suppress_stdout():
+            return multiclass_adult.DatasetAdult_V2('datasets/adult_multiclass.csv', train=(phase == 'train'),target=1)
+    
+    elif name == 'ADULT_workclass':
+        if input_size != real_size:
+            print("size doesn't match")
+        else:
+            transform_list = []
+        transform_list += [
+            transforms.ToTensor(),
+        ]
+        with suppress_stdout():
+            return multiclass_adult.DatasetAdult_V2('datasets/adult_multiclass.csv', train=(phase == 'train'),target=2)
 
     elif name == 'MNIST_RGB':
         transform_list = [transforms.Grayscale(3)]
