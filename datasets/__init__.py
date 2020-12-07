@@ -126,7 +126,7 @@ def get_dataset(state, phase):
             transforms.ToTensor(),
         ]
         with suppress_stdout():
-            return multiclass_adult.DatasetAdult_V2('datasets/newAdult.csv', train=(phase == 'train'))
+            return multiclass_adult.DatasetAdult_V2('datasets/adult_multiclass.csv', train=(phase == 'train'))
 
     elif name == 'MNIST_RGB':
         transform_list = [transforms.Grayscale(3)]
