@@ -112,7 +112,17 @@ def get_dataset(state, phase):
         with suppress_stdout():
             return adult.DatasetAdult('datasets/clean_adult.csv', train=(phase == 'train'))
 
-    
+    elif name == 'ADULT_V2':
+        if input_size != real_size:
+            print("size doesn't match")
+        else:
+            transform_list = []
+        transform_list += [
+            transforms.ToTensor(),
+        ]
+        with suppress_stdout():
+            return multiclass_adult.DatasetAdult_V2('datasets/newAdult.csv', train=(phase == 'train'))
+
     elif name == 'MNIST_RGB':
         transform_list = [transforms.Grayscale(3)]
         if input_size != real_size:

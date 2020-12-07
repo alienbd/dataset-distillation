@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, Dataset
 
 
 
-class DatasetAdult(Dataset):
+class DatasetAdult_V2(Dataset):
     
     def __init__(self, file_path,val_split=0.2,train=True, seed=42,target=2):
         self.path = file_path
