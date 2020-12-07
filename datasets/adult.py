@@ -34,10 +34,6 @@ class DatasetAdult(Dataset):
         return len(self.data)
 
     def __getitem__(self, index):
-        # load image as ndarray type (Height * Width * Channels)
-        # be carefull for converting dtype to np.uint8 [Unsigned integer (0 to 255)]
-        # in this example, i don't use ToTensor() method of torchvision.transforms
-        # so you can convert numpy ndarray shape to tensor in PyTorch (H, W, C) --> (C, H, W)
         dataPoint = self.data.iloc[index, :-1].values.astype(np.float32)
         label = self.data.iloc[index, -1]
 

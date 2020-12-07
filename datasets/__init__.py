@@ -101,7 +101,7 @@ def get_dataset(state, phase):
         with suppress_stdout():
             return datasets.MNIST(root, train=(phase == 'train'), download=True,
                                   transform=transforms.Compose(transform_list))
-    if name == 'ADULT':
+    elif name == 'ADULT':
         if input_size != real_size:
             print("size doesn't match")
         else:
@@ -111,6 +111,8 @@ def get_dataset(state, phase):
         ]
         with suppress_stdout():
             return adult.DatasetAdult('datasets/clean_adult.csv', train=(phase == 'train'))
+
+    
     elif name == 'MNIST_RGB':
         transform_list = [transforms.Grayscale(3)]
         if input_size != real_size:
