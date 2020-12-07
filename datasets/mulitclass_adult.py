@@ -3,10 +3,7 @@ import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 import torch
 from torch.utils.data import DataLoader, Dataset
-import torchvision
-from torchvision import transforms
 
-from sklearn import preprocessing
 
 
 class DatasetAdult(Dataset):
