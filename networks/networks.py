@@ -51,7 +51,9 @@ class SimpleNN(utils.ReparamModule):
         x = F.relu(self.fc4(x))
         x = F.relu(self.fc5(x))
         x = F.relu(self.fc6(x))
-        return torch.sigmoid(self.fc7(x))
+        x = self.fc7(x)
+        return x
+        # return torch.sigmoid(self.fc7(x))
 
 
 class AlexCifarNet(utils.ReparamModule):
