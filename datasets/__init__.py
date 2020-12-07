@@ -19,7 +19,8 @@ default_dataset_roots = dict(
     Cifar10='./data/cifar10',
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
-    ADULT='./data/adult'
+    ADULT='./data/adult',
+    ADULT_V2 = './data/newAdult'
 )
 
 
@@ -33,7 +34,8 @@ dataset_normalization = dict(
     CUB200=((0.47850531339645386, 0.4992702007293701, 0.4022205173969269),
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
-    ADULT=((1,), (1,))
+    ADULT=((1,), (1,)),
+    ADULT_V2=((1,), (1,))
 )
 
 
@@ -46,7 +48,8 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
-    ADULT=['0', '1']
+    ADULT=['0', '1'],
+    ADULT_V2 = ['0','1']
 )
 
 # (nc, real_size, num_classes)
@@ -61,6 +64,7 @@ dataset_stats = dict(
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
     ADULT=DatasetStats(1, 25, 2),
+    ADULT_V2=DatasetStats(1, 18, 2),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
