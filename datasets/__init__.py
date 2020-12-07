@@ -9,6 +9,7 @@ from . import caltech_ucsd_birds
 from . import pascal_voc
 from .usps import USPS
 from . import adult
+from datasets import multiclass_adult
 
 default_dataset_roots = dict(
     MNIST='./data/mnist',
