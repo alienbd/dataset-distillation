@@ -65,9 +65,8 @@ class SimpleNN_V2(utils.ReparamModule):
         self.fc2 = nn.Linear(1024, 512)
         self.fc3 = nn.Linear(512, 256)
         self.fc4 = nn.Linear(256, 128)
-        self.fc5 = nn.Linear(128, 1)
+        self.fc5 = nn.Linear(128, 1 if state.num_classes <= 2 else state.num_classes)
         self.drp = nn.Dropout(0.2, inplace=True)
-        print(f"num class(a): {state.num_classes}")
 
     def forward(self, x):
         x = F.relu(self.fc1(x))

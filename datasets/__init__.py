@@ -71,8 +71,8 @@ dataset_stats = dict(
     PASCAL_VOC=DatasetStats(3, 224, 20),
     ADULT=DatasetStats(1, 25, 2),
     ADULT_sex=DatasetStats(1, 18, 2),
-    ADULT_race=DatasetStats(1, 18, 2),
-    ADULT_workclass=DatasetStats(1, 18, 2),
+    ADULT_race=DatasetStats(1, 18, 3),
+    ADULT_workclass=DatasetStats(1, 18, 4),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
