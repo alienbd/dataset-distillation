@@ -25,8 +25,8 @@ class DatasetAdult_V2(Dataset):
             self.X_set = trainset[featureSet]
             self.Y_set = trainset[targetList[target]]
         else:
-            self.X_set = trainset[featureSet]
-            self.Y_set = trainset[targetList[target]]
+            self.X_set = testset[featureSet]
+            self.Y_set = testset[targetList[target]]
       
     def __len__(self):
         return len(self.X_set)
