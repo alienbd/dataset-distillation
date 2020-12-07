@@ -56,6 +56,31 @@ class SimpleNN(utils.ReparamModule):
         # return torch.sigmoid(self.fc7(x))
 
 
+class SimpleNN_V2(utils.ReparamModule):
+    supported_dims = {18,}
+      
+    def __init__(self, state):
+        super(SimpleNN_V2, self).__init__()
+        self.fc1 = nn.Linear(18, 1024)
+        self.fc2 = nn.Linear(1024, 512)
+        self.fc3 = nn.Linear(512, 256)
+        self.fc4 = nn.Linear(256, 128)
+        self.fc5 = nn.Linear(128, 1)
+        self.drp = nn.Dropout(0.2, inplace=True)
+        print(f"num class(a): {state.num_classes}")
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = self.drp(x)
+        x = F.relu(self.fc2(x))
+        x = self.drp(x)
+        x = F.relu(self.fc3(x))
+        x = self.drp(x)
+        x = F.relu(self.fc4(x))
+        x = self.drp(x)
+        x = self.fc5(x)
+        return x
+
 class AlexCifarNet(utils.ReparamModule):
     supported_dims = {32}
 
