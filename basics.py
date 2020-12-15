@@ -191,7 +191,7 @@ def format_stepwise_results(state, steps, info, res):
         return ' '.join(single_fmt.format(f) for f in fields)
 
     msgs = [format_into_line('STEP', 'ACCURACY', 'LOSS', align='^')]
-    print("alien: " + pm)
+
     acc_fmt = '{{: >8.4f}} {}{{: >5.2f}}%'.format(pm)
     loss_fmt = '{{: >8.4f}} {}{{: >5.2f}}'.format(pm)
     tested_steps = set(res[0].tolist())
@@ -204,6 +204,7 @@ def format_stepwise_results(state, steps, info, res):
         acc_mu = acc_mu.view(-1)  # into vector
         acc_std = acc_std.view(-1)  # into vector
         acc_str = acc_fmt.format(acc_mu[0], acc_std[0])
+        print(f"alien : {acc_str}")
         msgs.append(format_into_line(desc, acc_str, loss_str))
 
         if state.mode == 'distill_attack':
