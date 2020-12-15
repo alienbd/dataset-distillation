@@ -191,6 +191,7 @@ def format_stepwise_results(state, steps, info, res):
         return ' '.join(single_fmt.format(f) for f in fields)
 
     msgs = [format_into_line('STEP', 'ACCURACY', 'LOSS', align='^')]
+    print("alien: " + pm)
     acc_fmt = '{{: >8.4f}} {}{{: >5.2f}}%'.format(pm)
     loss_fmt = '{{: >8.4f}} {}{{: >5.2f}}'.format(pm)
     tested_steps = set(res[0].tolist())
